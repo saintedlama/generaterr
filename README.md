@@ -8,7 +8,7 @@ Generates custom and valid node.js error functions for node.js.
 
 ## Usage
 
-Basis Usage
+#### Basis Usage
 
     var ParseError = generaterr('ParseError');
 
@@ -21,7 +21,8 @@ Basis Usage
       console.log(e.stack);
     }
 
-Formatting messages
+#### Formatting messages
+
     var ParseError = generaterr('ParseError');
 
     try
