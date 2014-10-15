@@ -45,7 +45,20 @@ describe('generaterr', function() {
   });
 
   it('should throw an error without stack trace if turned off by options', function(done) {
-    var ParseError = generaterr('ParseError', { captureStackTrace : false });
+    var ParseError = generaterr('ParseError', {}, { captureStackTrace : false });
+
+    try
+    {
+      throw new ParseError('Could not parse file due to missing semicolons');
+    } catch(e) {
+      expect(e.stack).to.not.exist;
+
+      done();
+    }
+  });
+
+  it('should allow to pass options only', function(done) {
+    var ParseError = generaterr('ParseError', null, { captureStackTrace : false });
 
     try
     {
@@ -67,5 +80,21 @@ describe('generaterr', function() {
       expect(e.message).to.equal('Could not parse file "input.js" due to missing semicolons at line 10:12');
       done();
     }
+  });
+
+  it('should last argument object to error instance', function() {
+    var ParseError = generaterr('ParseError');
+
+    var err = new ParseError('Could not parse file "%s" due to missing semicolons at line %d:%d', 'input.js', 10, 12, { status : 'FATAL' });
+    expect(err.message).to.equal('Could not parse file "input.js" due to missing semicolons at line 10:12');
+    expect(err.status).to.equal('FATAL');
+  });
+
+  it('should copy parameters passed to constructor generator functions to error instance', function() {
+    var NotFoundError = generaterr('NotFoundError', { status : 404 });
+
+    var notFoundError = new NotFoundError('Could find resource /api/random/numbers');
+    expect(notFoundError.status).to.equal(404);
+    expect(notFoundError.name).to.equal('NotFoundError');
   });
 });
