@@ -97,4 +97,14 @@ describe('generaterr', function() {
     expect(notFoundError.status).to.equal(404);
     expect(notFoundError.name).to.equal('NotFoundError');
   });
+
+  it('should throw if not invoked with the new keyword', function(done) {
+    var NotFoundError = generaterr('NotFoundError');
+
+    try {
+      NotFoundError('Could find resource /api/random/numbers', { status : 'FATAL' });
+    } catch(e) {
+      done();
+    }
+  });
 });

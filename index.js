@@ -5,6 +5,10 @@ module.exports = function(name, parameters, options) {
   options.captureStackTrace = options.captureStackTrace == undefined ? true : false;
 
   var ctor = function(msg) {
+    if (!(this instanceof ctor)) {
+      throw new Error('Trying to create an error instance without invoking contructor with "new" keyword');
+    }
+
     Error.call(this);
 
     if (options.captureStackTrace) {
