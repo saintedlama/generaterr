@@ -107,4 +107,13 @@ describe('generaterr', function() {
       done();
     }
   });
+
+  it('should override error constructor properties', function() {
+    var ExternalServiceError = generaterr('ExternalServiceError', { status : 500 });
+    var url = 'http://localhost';
+
+    var err = new ExternalServiceError('Communication with api api "%s" failed due to error', url, { status : 404 });
+
+    expect(err.status).to.equal(404);
+  })
 });

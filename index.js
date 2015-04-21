@@ -15,6 +15,8 @@ module.exports = function(name, parameters, options) {
       Error.captureStackTrace && Error.captureStackTrace(this, arguments.callee);
     }
 
+    copy(parameters, this);
+
     if (msg) {
       var args = Array.prototype.slice.call(arguments);
 
@@ -26,8 +28,6 @@ module.exports = function(name, parameters, options) {
 
       this.message = util.format.apply(util, args);
     }
-
-    copy(parameters, this);
 
     this.name = name;
   };
