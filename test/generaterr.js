@@ -98,14 +98,23 @@ describe('generaterr', function() {
     expect(notFoundError.name).to.equal('NotFoundError');
   });
 
-  it('should throw if not invoked with the new keyword', function(done) {
+  it('should create an error with new if not invoked with "new" keyword', function() {
     var NotFoundError = generaterr('NotFoundError');
 
-    try {
-      NotFoundError('Could find resource /api/random/numbers', { status : 'FATAL' });
-    } catch(e) {
-      done();
-    }
+    var err = NotFoundError('Could find resource /api/random/numbers');
+
+    expect(err).to.be.instanceof(NotFoundError);
+    expect(err.message).to.equal('Could find resource /api/random/numbers');
+  });
+
+  it('should create an error with new if not invoked with "new" keyword with parameters', function() {
+    var NotFoundError = generaterr('NotFoundError');
+
+    var err = NotFoundError('Could find resource /api/random/numbers', { status : 'FATAL' });
+
+    expect(err).to.be.instanceof(NotFoundError);
+    expect(err.status).to.equal('FATAL');
+    expect(err.message).to.equal('Could find resource /api/random/numbers');
   });
 
   it('should override error constructor properties', function() {
@@ -115,5 +124,14 @@ describe('generaterr', function() {
     var err = new ExternalServiceError('Communication with api api "%s" failed due to error', url, { status : 404 });
 
     expect(err.status).to.equal(404);
-  })
+  });
+
+  it('should inherit from passed error', function() {
+    var SuperError = generaterr('ParentError');
+    var InheritedError = generaterr('InheritedError', {}, { inherits : SuperError });
+
+    var err = new InheritedError('Communication with api api "%s" failed due to error');
+
+    expect(err).to.be.instanceof(SuperError);
+  });
 });

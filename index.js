@@ -3,13 +3,17 @@ var util = require('util');
 module.exports = function(name, parameters, options) {
   options = options || {};
   options.captureStackTrace = options.captureStackTrace == undefined ? true : false;
+  options.inherits = options.inherits || Error;
 
-  var ctor = function(msg) {
+  var ctor = function() {
     if (!(this instanceof ctor)) {
-      throw new Error('Trying to create an error instance without invoking contructor with "new" keyword');
+      var args = Array.prototype.slice.call(arguments);
+      args.unshift(ctor);
+
+      return new (ctor.bind.apply(ctor, args));
     }
 
-    Error.call(this);
+    options.inherits.call(this);
 
     if (options.captureStackTrace) {
       Error.captureStackTrace && Error.captureStackTrace(this, arguments.callee);
@@ -17,6 +21,7 @@ module.exports = function(name, parameters, options) {
 
     copy(parameters, this);
 
+    var msg = arguments[0];
     if (msg) {
       var args = Array.prototype.slice.call(arguments);
 
@@ -32,7 +37,7 @@ module.exports = function(name, parameters, options) {
     this.name = name;
   };
 
-  util.inherits(ctor, Error);
+  util.inherits(ctor, options.inherits);
 
   return ctor;
 };
