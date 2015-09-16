@@ -13,7 +13,8 @@
   ],
   "devDependencies": {
     "chai": "^1.9.1",
-    "mocha": "^1.21.4"
+    "mocha": "^1.21.4",
+    "shelljs": "^0.5.3"
   },
   "scripts": {
     "test": "mocha -R spec test/",
