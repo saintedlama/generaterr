@@ -7,10 +7,10 @@ module.exports = function(name, parameters, options) {
 
   var ctor = function() {
     if (!(this instanceof ctor)) {
-      var args = Array.prototype.slice.call(arguments);
-      args.unshift(ctor);
+      var constructorArgs = Array.prototype.slice.call(arguments);
+      constructorArgs.unshift(ctor);
 
-      return new (ctor.bind.apply(ctor, args));
+      return new (ctor.bind.apply(ctor, constructorArgs));
     }
 
     options.inherits.call(this);
