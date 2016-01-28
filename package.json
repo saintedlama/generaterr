@@ -12,12 +12,15 @@
     "custom-error"
   ],
   "devDependencies": {
-    "chai": "^1.9.1",
-    "mocha": "^1.21.4",
+    "chai": "^3.4.1",
+    "mocha": "^2.4.4",
     "shelljs": "^0.5.3"
   },
   "scripts": {
     "test": "mocha -R spec test/",
     "cover": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec"
+  },
+  "dependencies": {
+    "lodash": "^4.0.1"
   }
 }
