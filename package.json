@@ -21,6 +21,6 @@
     "cover": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec"
   },
   "dependencies": {
-    "lodash": "^4.0.1"
+    "lodash": "^4.12.0"
   }
 }
