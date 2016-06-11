@@ -1,8 +1,9 @@
+/* jshint expr: true */
 var util = require('util');
 
 module.exports = function(name, parameters, options) {
   options = options || {};
-  options.captureStackTrace = options.captureStackTrace == undefined ? true : false;
+  options.captureStackTrace = options.captureStackTrace === undefined ? true : false;
   options.inherits = options.inherits || Error;
 
   var ctor = function() {
@@ -10,7 +11,7 @@ module.exports = function(name, parameters, options) {
       var constructorArgs = Array.prototype.slice.call(arguments);
       constructorArgs.unshift(ctor);
 
-      return new (ctor.bind.apply(ctor, constructorArgs));
+      return new (ctor.bind.apply(ctor, constructorArgs))();
     }
 
     options.inherits.call(this);
