@@ -1,6 +1,7 @@
 # Generaterr
 
 [![Build Status](https://travis-ci.org/saintedlama/generaterr.svg?branch=master)](https://travis-ci.org/saintedlama/generaterr)
+[![Coverage Status](https://coveralls.io/repos/github/saintedlama/generaterr/badge.svg?branch=master)](https://coveralls.io/github/saintedlama/generaterr?branch=master)
 
 Generates custom and valid node.js error functions for node.js.
 
